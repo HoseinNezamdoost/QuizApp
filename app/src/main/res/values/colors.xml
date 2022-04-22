@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#091032</color>
+    <color name="purple_500">#070d2b</color>
+    <color name="purple_700">#000312</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="dracula1">#070d2b</color>
+    <color name="dracula2">#000312</color>
+
+    <color name="dracula4">#000133</color>
+    <color name="dracula3">#151b4c</color>
+
+    <color name="red">#e91e63</color>
+    <color name="red2">#f44336</color>
+
+    <color name="yellow">#FFFC00</color>
+    <color name="yellow2">#FFFD71</color>
+
+    <color name="green1">#52ff75</color>
+    <color name="green2">#3ce312</color>
+
+    <color name="green3">#80ff8e</color>
+    <color name="green4">#00ff1e</color>
+
+    <color name="blue">	#03a9f4</color>
+    <color name="blue2">#00bcd4</color>
+
+    <color name="gray">#4088a9</color>
+    <color name="gray2">#284e74</color>
+
+    <color name="gray3">#013165</color>
+    <color name="gray4">#1157a2</color>
+
+    <color name="milkshake">#ff99bb</color>
+    <color name="milkshake2">#ff87af</color>
+
+    <color name="modern">#6600ff</color>
+    <color name="modern2">#2b00ff</color>
+
+</resources>
