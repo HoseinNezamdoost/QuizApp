@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/background_main">
+    android:background="@drawable/background_main"
+    android:id="@+id/layout_start_parent">
 
     <TextView
         android:id="@+id/text_show"
@@ -20,26 +21,28 @@
         android:id="@+id/most_point"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Most Point : 30"
-        android:textColor="@color/yellow"
-        android:fontFamily="@font/english"
         android:layout_below="@id/text_show"
-        android:textSize="25sp"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:layout_centerHorizontal="true"/>
+        android:fontFamily="@font/english"
+        android:text="Most Point : 0"
+        android:textColor="@color/yellow"
+        android:textSize="25sp" />
 
     <TextView
         android:id="@+id/last_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Last Score: 12"
         android:layout_below="@id/most_point"
-        android:textColor="@color/milkshake"
-        android:fontFamily="@font/english"
-        android:textSize="20sp"
         android:layout_centerInParent="true"
-        android:layout_margin="10dp"
-        />
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/english"
+        android:text="Last Score: 0"
+        android:textColor="@color/milkshake"
+        android:textSize="20sp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_start_game"
@@ -48,10 +51,21 @@
         android:layout_below="@id/last_score"
         android:layout_marginTop="100dp"
         android:layout_centerHorizontal="true"
-        app:strokeWidth="2dp"
+        app:strokeWidth="1dp"
         app:strokeColor="@color/gray2"
-        app:cornerRadius="20dp"
+        app:cornerRadius="10dp"
         android:text="start"
+        android:textColor="@color/gray2"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_exit_app"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_start_game"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:text="exit"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:textColor="@color/gray2"/>
 
 </RelativeLayout>

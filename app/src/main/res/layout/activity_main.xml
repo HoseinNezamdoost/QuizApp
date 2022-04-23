@@ -165,4 +165,8 @@
 
     </LinearLayout>
 
+    <include
+
+        layout="@layout/layout_start"/>
+
 </RelativeLayout>
