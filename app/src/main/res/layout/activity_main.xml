@@ -1,18 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/background_main">
+
+    <RelativeLayout
+        android:background="@color/dracula1"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true">
+
+        <ImageView
+            android:id="@+id/icon_cup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/cup"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"/>
+
+        <TextView
+            android:id="@+id/text_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@id/icon_cup"
+            android:fontFamily="@font/english"
+            android:text="loadin"
+            android:textColor="@color/red"
+            android:textSize="20sp"
+            tools:text="12" />
+
+        <ImageView
+            android:id="@+id/icon_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/time"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp"/>
+
+        <TextView
+            android:id="@+id/text_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/icon_time"
+            android:fontFamily="@font/english"
+            android:text="loadin"
+            android:textColor="@color/green2"
+            android:textSize="20sp"
+            tools:text="01:35" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quiz Online"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            android:fontFamily="@font/english"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
 
     <TextView
+        android:id="@+id/text_question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_below="@+id/toolbar"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:text="loadin"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:fontFamily="@font/english"
+        tools:text="Good morning everybody." />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/text_question"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="20dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="answer"
+            tools:text="Goodbye."
+            android:textAllCaps="false"
+            android:padding="15sp"
+            app:cornerRadius="12dp"
+            android:gravity="start"
+            app:icon="@drawable/ic_circle"
+            app:iconGravity="end"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/gray2"
+            app:iconTint="@color/gray2"
+            android:fontFamily="@font/directaserif"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="answer"
+            tools:text="Hi."
+            android:textAllCaps="false"
+            android:padding="15sp"
+            app:cornerRadius="12dp"
+            android:gravity="start"
+            app:icon="@drawable/ic_circle"
+            app:iconGravity="end"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/gray2"
+            app:iconTint="@color/gray2"
+            android:fontFamily="@font/directaserif"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="answer"
+            tools:text="Take care."
+            android:textAllCaps="false"
+            android:padding="15sp"
+            app:cornerRadius="12dp"
+            android:gravity="start"
+            app:icon="@drawable/ic_circle"
+            app:iconGravity="end"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/gray2"
+            app:iconTint="@color/gray2"
+            android:fontFamily="@font/directaserif"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="answer"
+            tools:text="See you tomorrow."
+            android:textAllCaps="false"
+            android:padding="15sp"
+            app:cornerRadius="12dp"
+            android:gravity="start"
+            app:icon="@drawable/ic_circle"
+            app:iconGravity="end"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/gray2"
+            app:iconTint="@color/gray2"
+            android:fontFamily="@font/directaserif"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
