@@ -65,6 +65,19 @@ public class MainActivity extends AppCompatActivity {
         layout_start_parent = findViewById(R.id.layout_start_parent);
         buttonExitApp = findViewById(R.id.button_exit_app);
 
+        animationForButtonStartGame(buttonStartGame);
+
+        buttonStartGame.setOnClickListener(view -> {
+            layout_start_parent.setVisibility(View.GONE);
+        });
+
+        buttonExitApp.setOnClickListener(view -> {
+            finish();
+        });
+
+    }
+
+    public void animationForButtonStartGame(MaterialButton buttonStartGame){
         AlphaAnimation alphaAnimation = new AlphaAnimation(0,2);
         alphaAnimation.setDuration(500);
         alphaAnimation.setFillAfter(true);
@@ -84,15 +97,6 @@ public class MainActivity extends AppCompatActivity {
         set.addAnimation(scaleAnimation);
         set.addAnimation(alphaAnimation);
         buttonStartGame.startAnimation(set);
-
-        buttonStartGame.setOnClickListener(view -> {
-            layout_start_parent.setVisibility(View.GONE);
-        });
-
-        buttonExitApp.setOnClickListener(view -> {
-            finish();
-        });
-
     }
 
 }
