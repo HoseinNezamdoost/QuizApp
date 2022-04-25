@@ -96,6 +96,7 @@
         android:layout_marginEnd="20dp">
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/optionZero"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -113,6 +114,7 @@
             android:fontFamily="@font/directaserif"/>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/optionOwn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -130,6 +132,7 @@
             android:fontFamily="@font/directaserif"/>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/optionTwo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -147,6 +150,7 @@
             android:fontFamily="@font/directaserif"/>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/optionThree"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -166,7 +170,7 @@
     </LinearLayout>
 
     <include
-
-        layout="@layout/layout_start"/>
+        layout="@layout/layout_start"
+        android:visibility="gone"/>
 
 </RelativeLayout>

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
@@ -28,15 +30,36 @@ public class MainActivity extends AppCompatActivity {
 
     MaterialButton buttonStartGame , buttonExitApp;
     RelativeLayout layout_start_parent;
+    TextView textTime;
+    TextView textScore;
+    TextView textQuiz;
+    MaterialButton optionZero;
+    MaterialButton optionOwn;
+    MaterialButton optionTwo;
+    MaterialButton optionThree;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        findViewByIdInit();
+
         setupStartPage();
         getQuestionFromServer();
+        StartGame startGame = new StartGame(this);
+        startGame.setTextTime(textTime , 100000);
+    }
 
+    private void findViewByIdInit() {
+        textScore = findViewById(R.id.text_score);
+        textTime = findViewById(R.id.text_time);
+        textQuiz = findViewById(R.id.text_question);
+        optionZero = findViewById(R.id.optionZero);
+        optionOwn = findViewById(R.id.optionOwn);
+        optionTwo = findViewById(R.id.optionTwo);
+        optionThree = findViewById(R.id.optionThree);
     }
 
     private void getQuestionFromServer() {
