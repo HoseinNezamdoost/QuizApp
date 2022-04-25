@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -16,6 +17,13 @@ import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MainActivity extends AppCompatActivity {
 
     MaterialButton buttonStartGame , buttonExitApp;
@@ -27,6 +35,27 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setupStartPage();
+        getQuestionFromServer();
+
+    }
+
+    private void getQuestionFromServer() {
+
+        ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
+        apiInterface.getQuestion().enqueue(new Callback<List<ModelQuestion>>() {
+            @Override
+            public void onResponse(Call<List<ModelQuestion>> call, Response<List<ModelQuestion>> response) {
+                List<ModelQuestion> modelQuestions = new ArrayList<>();
+                modelQuestions.addAll(response.body());
+                Toast.makeText(MainActivity.this, "s", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<List<ModelQuestion>> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                Log.d("TAG", "onFailure: " + t);
+            }
+        });
 
     }
 
