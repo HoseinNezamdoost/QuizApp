@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     MaterialButton optionOwn;
     MaterialButton optionTwo;
     MaterialButton optionThree;
-
+    List<ModelQuestion> modelQuestions = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +45,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         findViewByIdInit();
-
         setupStartPage();
         getQuestionFromServer();
+    }
+
+    private void startGame() {
         StartGame startGame = new StartGame(this);
-        startGame.setTextTime(textTime , 100000);
+        startGame.setTextTime(textTime , 101000);
+        startGame.setTextScore(textScore , 0);
+        startGame.setTextQuiz(textQuiz , modelQuestions.get(0).getQuiz());
+        startGame.setOptionZero(optionZero , modelQuestions.get(0).getOption_zero());
+        startGame.setOptionOwn(optionOwn , modelQuestions.get(0).getOption_own());
+        startGame.setOptionTwo(optionTwo , modelQuestions.get(0).getOption_two());
+        startGame.setOptionThree(optionThree , modelQuestions.get(0).getOption_three());
     }
 
     private void findViewByIdInit() {
@@ -68,9 +76,9 @@ public class MainActivity extends AppCompatActivity {
         apiInterface.getQuestion().enqueue(new Callback<List<ModelQuestion>>() {
             @Override
             public void onResponse(Call<List<ModelQuestion>> call, Response<List<ModelQuestion>> response) {
-                List<ModelQuestion> modelQuestions = new ArrayList<>();
-                modelQuestions.addAll(response.body());
+                modelQuestions = response.body();
                 Toast.makeText(MainActivity.this, "s", Toast.LENGTH_SHORT).show();
+                startGame();
             }
 
             @Override

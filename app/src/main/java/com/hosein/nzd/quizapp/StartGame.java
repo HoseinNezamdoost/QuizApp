@@ -20,9 +20,32 @@ public class StartGame {
         this.context = context;
     }
 
-    public void setTextScore(TextView textScore , String score) {
-        textScore.setText(score);
+
+    public void setTextScore(TextView textScore , int score) {
+        textScore.setText(String.valueOf(score));
     }
+
+    public void setTextQuiz(TextView textQuiz , String quiz) {
+        textQuiz.setText(quiz);
+    }
+
+    public void setOptionZero(MaterialButton optionZero , String question) {
+        optionZero.setText(question);
+    }
+
+    public void setOptionOwn(MaterialButton optionOwn, String question) {
+        optionOwn.setText(question);
+    }
+
+    public void setOptionTwo(MaterialButton optionTwo, String question) {
+        optionTwo.setText(question);
+    }
+
+    public void setOptionThree(MaterialButton optionThree, String question) {
+        optionThree.setText(question);
+    }
+
+    // methods set the time
 
     public void setTextTime(TextView textTime , int time) {
 
@@ -39,22 +62,6 @@ public class StartGame {
             }
         }.start();
 
-    }
-
-    public void setTextQuiz(TextView textQuiz , String quiz) {
-        textQuiz.setText(quiz);
-    }
-
-    public void setOptionZero(MaterialButton optionZero) {
-    }
-
-    public void setOptionOwn(MaterialButton optionOwn) {
-    }
-
-    public void setOptionTwo(MaterialButton optionTwo) {
-    }
-
-    public void setOptionThree(MaterialButton optionThree) {
     }
 
     private void updateTime(TextView text){
