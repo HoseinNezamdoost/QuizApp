@@ -2,6 +2,7 @@ package com.hosein.nzd.quizapp;
 
 import android.content.Context;
 import android.os.CountDownTimer;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
@@ -29,20 +30,32 @@ public class StartGame {
         textQuiz.setText(quiz);
     }
 
-    public void setOptionZero(MaterialButton optionZero , String question) {
+    public void setOptionZero(MaterialButton optionZero , String question , View.OnClickListener onClickListener) {
         optionZero.setText(question);
+        optionZero.setOnClickListener(view -> {
+            onClickListener.onClick(view);
+        });
     }
 
-    public void setOptionOwn(MaterialButton optionOwn, String question) {
+    public void setOptionOwn(MaterialButton optionOwn, String question, View.OnClickListener onClickListener) {
         optionOwn.setText(question);
+        optionOwn.setOnClickListener(view -> {
+            onClickListener.onClick(view);
+        });
     }
 
-    public void setOptionTwo(MaterialButton optionTwo, String question) {
+    public void setOptionTwo(MaterialButton optionTwo, String question, View.OnClickListener onClickListener) {
         optionTwo.setText(question);
+        optionTwo.setOnClickListener(view -> {
+            onClickListener.onClick(view);
+        });
     }
 
-    public void setOptionThree(MaterialButton optionThree, String question) {
+    public void setOptionThree(MaterialButton optionThree, String question, View.OnClickListener onClickListener)             {
         optionThree.setText(question);
+        optionThree.setOnClickListener(view -> {
+            onClickListener.onClick(view);
+        });
     }
 
     // methods set the time

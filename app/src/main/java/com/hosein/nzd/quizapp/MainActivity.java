@@ -1,18 +1,16 @@
 package com.hosein.nzd.quizapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
-import android.view.animation.TranslateAnimation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +24,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     MaterialButton buttonStartGame , buttonExitApp;
     RelativeLayout layout_start_parent;
@@ -37,7 +35,9 @@ public class MainActivity extends AppCompatActivity {
     MaterialButton optionOwn;
     MaterialButton optionTwo;
     MaterialButton optionThree;
-    List<ModelQuestion> modelQuestions = new ArrayList<>();
+    List<ModelQuestion> questionList = new ArrayList<>();
+    StartGame startGame;
+    private int idQuiz = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,14 +50,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startGame() {
-        StartGame startGame = new StartGame(this);
+        startGame = new StartGame(this);
         startGame.setTextTime(textTime , 101000);
         startGame.setTextScore(textScore , 0);
-        startGame.setTextQuiz(textQuiz , modelQuestions.get(0).getQuiz());
-        startGame.setOptionZero(optionZero , modelQuestions.get(0).getOption_zero());
-        startGame.setOptionOwn(optionOwn , modelQuestions.get(0).getOption_own());
-        startGame.setOptionTwo(optionTwo , modelQuestions.get(0).getOption_two());
-        startGame.setOptionThree(optionThree , modelQuestions.get(0).getOption_three());
+        startGame.setTextQuiz(textQuiz , questionList.get(0).getQuiz());
+        startGame.setOptionZero(optionZero , questionList.get(0).getOption_zero() , this);
+        startGame.setOptionOwn(optionOwn , questionList.get(0).getOption_own() , this);
+        startGame.setOptionTwo(optionTwo , questionList.get(0).getOption_two() , this);
+        startGame.setOptionThree(optionThree , questionList.get(0).getOption_three() , this);
     }
 
     private void findViewByIdInit() {
@@ -68,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
         optionOwn = findViewById(R.id.optionOwn);
         optionTwo = findViewById(R.id.optionTwo);
         optionThree = findViewById(R.id.optionThree);
+        optionZero.setTag(0);
+        optionOwn.setTag(1);
+        optionTwo.setTag(2);
+        optionThree.setTag(3);
     }
 
     private void getQuestionFromServer() {
@@ -76,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         apiInterface.getQuestion().enqueue(new Callback<List<ModelQuestion>>() {
             @Override
             public void onResponse(Call<List<ModelQuestion>> call, Response<List<ModelQuestion>> response) {
-                modelQuestions = response.body();
+                questionList = response.body();
                 Toast.makeText(MainActivity.this, "s", Toast.LENGTH_SHORT).show();
                 startGame();
             }
@@ -130,4 +134,41 @@ public class MainActivity extends AppCompatActivity {
         buttonStartGame.startAnimation(set);
     }
 
+    @Override
+    public void onClick(View view) {
+
+        idQuiz += 1;
+        if ((int) view.getTag() == questionList.get(idQuiz).getAnswerTrue()){
+            ((MaterialButton)view).setStrokeColor(ContextCompat.getColorStateList(MainActivity.this , R.color.green1));
+            ((MaterialButton)view).setTextColor(ContextCompat.getColor(MainActivity.this , R.color.green1));
+            ((MaterialButton)view).setIcon(ContextCompat.getDrawable(MainActivity.this , R.drawable.ic_check));
+            ((MaterialButton)view).setIconTint(ContextCompat.getColorStateList(MainActivity.this , R.color.green1));
+        }else {
+            ((MaterialButton)view).setStrokeColor(ContextCompat.getColorStateList(MainActivity.this , R.color.red));
+            ((MaterialButton)view).setTextColor(ContextCompat.getColor(MainActivity.this , R.color.red));
+            ((MaterialButton)view).setIcon(ContextCompat.getDrawable(MainActivity.this , R.drawable.ic_close));
+            ((MaterialButton)view).setIconTint(ContextCompat.getColorStateList(MainActivity.this , R.color.red));
+        }
+        updateGame(view);
+    }
+
+    public void updateGame(View view){
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startGame.setTextQuiz(textQuiz , questionList.get(idQuiz).getQuiz());
+                startGame.setOptionZero(optionZero , questionList.get(idQuiz).getOption_zero() ,MainActivity.this);
+                startGame.setOptionOwn(optionOwn , questionList.get(idQuiz).getOption_own() , MainActivity.this);
+                startGame.setOptionTwo(optionTwo , questionList.get(idQuiz).getOption_two() , MainActivity.this);
+                startGame.setOptionThree(optionThree , questionList.get(idQuiz).getOption_three() , MainActivity.this);
+
+                ((MaterialButton)view).setStrokeColor(ContextCompat.getColorStateList(MainActivity.this , R.color.gray2));
+                ((MaterialButton)view).setTextColor(ContextCompat.getColor(MainActivity.this , R.color.white));
+                ((MaterialButton)view).setIcon(ContextCompat.getDrawable(MainActivity.this , R.drawable.ic_circle));
+                ((MaterialButton)view).setIconTint(ContextCompat.getColorStateList(MainActivity.this , R.color.gray2));
+            }
+        } , 1000);
+
+    }
 }

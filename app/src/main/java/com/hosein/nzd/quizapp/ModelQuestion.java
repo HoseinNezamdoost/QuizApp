@@ -20,7 +20,7 @@ public class ModelQuestion {
     @SerializedName("options3")
     private String option_three;
     @SerializedName("answer")
-    private String answerTrue;
+    private int answerTrue;
 
     public int getId() {
         return id;
@@ -70,11 +70,11 @@ public class ModelQuestion {
         this.option_three = option_three;
     }
 
-    public String getAnswerTrue() {
+    public int getAnswerTrue() {
         return answerTrue;
     }
 
-    public void setAnswerTrue(String answerTrue) {
+    public void setAnswerTrue(int answerTrue) {
         this.answerTrue = answerTrue;
     }
 }
