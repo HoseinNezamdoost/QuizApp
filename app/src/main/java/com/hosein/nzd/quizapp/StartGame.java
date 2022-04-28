@@ -2,6 +2,7 @@ package com.hosein.nzd.quizapp;
 
 import android.content.Context;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ public class StartGame {
 
     long myTime;
     Context context;
+    public CountDownTimer countDownTimer;
 
     public StartGame(Context context) {
         this.context = context;
@@ -66,7 +68,7 @@ public class StartGame {
 
     public void setTextTime(TextView textTime , int time) {
 
-        new CountDownTimer(time, 1000) {
+         countDownTimer = new CountDownTimer(time, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 myTime = millisUntilFinished;
@@ -76,6 +78,12 @@ public class StartGame {
 
             public void onFinish() {
                 textTime.setText("done!");
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        MainActivity.layout_start_parent.setVisibility(View.VISIBLE);
+                    }
+                } , 500);
             }
         }.start();
 

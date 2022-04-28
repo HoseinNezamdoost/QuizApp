@@ -186,6 +186,6 @@
 
     <include
         layout="@layout/layout_start"
-        android:visibility="gone"/>
+        tools:visibility="gone"/>
 
 </RelativeLayout>

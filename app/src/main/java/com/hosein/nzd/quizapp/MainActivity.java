@@ -27,11 +27,12 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     MaterialButton buttonStartGame , buttonExitApp;
-    RelativeLayout layout_start_parent;
+    public static RelativeLayout layout_start_parent;
     TextView textTime;
     TextView textScore;
     TextView textQuiz;
     TextView textNumberQuiz;
+    TextView textMostPoint;
     MaterialButton optionZero;
     MaterialButton optionOwn;
     MaterialButton optionTwo;
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     StartGame startGame;
     private int idQuiz = 0;
     private int index = 0;
+    private int score = 0;
+    PointManager pointManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +52,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewByIdInit();
         setupStartPage();
         getQuestionFromServer();
+
     }
 
     private void startGame() {
         startGame = new StartGame(this);
         startGame.setTextTime(textTime , 101000);
+        startGame.setTextScore(textScore , 0);
+        startGame.setTextNumberQuiz(textNumberQuiz , 1);
+        startGame.setTextQuiz(textQuiz , questionList.get(0).getQuiz());
+        startGame.setOptionZero(optionZero , questionList.get(0).getOption_zero() , this);
+        startGame.setOptionOwn(optionOwn , questionList.get(0).getOption_own() , this);
+        startGame.setOptionTwo(optionTwo , questionList.get(0).getOption_two() , this);
+        startGame.setOptionThree(optionThree , questionList.get(0).getOption_three() , this);
+    }
+
+    private void startGameForOwn() {
+        startGame = new StartGame(this);
         startGame.setTextScore(textScore , 0);
         startGame.setTextNumberQuiz(textNumberQuiz , 1);
         startGame.setTextQuiz(textQuiz , questionList.get(0).getQuiz());
@@ -72,10 +87,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         optionOwn = findViewById(R.id.optionOwn);
         optionTwo = findViewById(R.id.optionTwo);
         optionThree = findViewById(R.id.optionThree);
+        textMostPoint = findViewById(R.id.most_point);
         optionZero.setTag(0);
         optionOwn.setTag(1);
         optionTwo.setTag(2);
         optionThree.setTag(3);
+        pointManager = new PointManager(MainActivity.this);
     }
 
     private void getQuestionFromServer() {
@@ -86,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onResponse(Call<List<ModelQuestion>> call, Response<List<ModelQuestion>> response) {
                 questionList = response.body();
                 Toast.makeText(MainActivity.this, "s", Toast.LENGTH_SHORT).show();
-                startGame();
+                startGameForOwn();
             }
 
             @Override
@@ -106,8 +123,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         animationForButtonStartGame(buttonStartGame);
 
+        textMostPoint.setText("Most Point is : " + pointManager.getBestPoint());
+
         buttonStartGame.setOnClickListener(view -> {
             layout_start_parent.setVisibility(View.GONE);
+            idQuiz = 0;
+            index = 0;
+            score = 0;
+            startGame();
         });
 
         buttonExitApp.setOnClickListener(view -> {
@@ -131,7 +154,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         scaleAnimation.setRepeatCount(Animation.INFINITE);
         scaleAnimation.setRepeatMode(Animation.REVERSE);
 
-
         AnimationSet set = new AnimationSet(true);
         set.addAnimation(scaleAnimation);
         set.addAnimation(alphaAnimation);
@@ -150,6 +172,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ((MaterialButton) view).setTextColor(ContextCompat.getColor(MainActivity.this, R.color.green1));
                 ((MaterialButton) view).setIcon(ContextCompat.getDrawable(MainActivity.this, R.drawable.ic_check));
                 ((MaterialButton) view).setIconTint(ContextCompat.getColorStateList(MainActivity.this, R.color.green1));
+                score+=1;
+                textScore.setText(String.valueOf(score));
             } else {
                 ((MaterialButton) view).setStrokeColor(ContextCompat.getColorStateList(MainActivity.this, R.color.red));
                 ((MaterialButton) view).setTextColor(ContextCompat.getColor(MainActivity.this, R.color.red));
@@ -179,8 +203,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     ((MaterialButton)view).setIconTint(ContextCompat.getColorStateList(MainActivity.this , R.color.gray2));
                 }catch (Exception e){
                     Toast.makeText(MainActivity.this, "finish", Toast.LENGTH_SHORT).show();
+                    if (Integer.parseInt(pointManager.getBestPoint()) < score){
+                        pointManager.savePoint(score);
+                    }
+                    layout_start_parent.setVisibility(View.VISIBLE);
+                    ((MaterialButton)view).setStrokeColor(ContextCompat.getColorStateList(MainActivity.this , R.color.gray2));
+                    ((MaterialButton)view).setTextColor(ContextCompat.getColor(MainActivity.this , R.color.white));
+                    ((MaterialButton)view).setIcon(ContextCompat.getDrawable(MainActivity.this , R.drawable.ic_circle));
+                    ((MaterialButton)view).setIconTint(ContextCompat.getColorStateList(MainActivity.this , R.color.gray2));
+                    startGame.countDownTimer.cancel();
                 }
-
             }
         } , 500);
 
