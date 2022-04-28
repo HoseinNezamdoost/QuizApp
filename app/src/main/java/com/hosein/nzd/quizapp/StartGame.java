@@ -30,6 +30,10 @@ public class StartGame {
         textQuiz.setText(quiz);
     }
 
+    public void setTextNumberQuiz(TextView textNumberQuiz , int quiz) {
+        textNumberQuiz.setText(String.valueOf(quiz)+"/30");
+    }
+
     public void setOptionZero(MaterialButton optionZero , String question , View.OnClickListener onClickListener) {
         optionZero.setText(question);
         optionZero.setOnClickListener(view -> {

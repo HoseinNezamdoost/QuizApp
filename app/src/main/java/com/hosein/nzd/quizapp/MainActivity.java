@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView textTime;
     TextView textScore;
     TextView textQuiz;
+    TextView textNumberQuiz;
     MaterialButton optionZero;
     MaterialButton optionOwn;
     MaterialButton optionTwo;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     List<ModelQuestion> questionList = new ArrayList<>();
     StartGame startGame;
     private int idQuiz = 0;
+    private int index = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startGame = new StartGame(this);
         startGame.setTextTime(textTime , 101000);
         startGame.setTextScore(textScore , 0);
+        startGame.setTextNumberQuiz(textNumberQuiz , 1);
         startGame.setTextQuiz(textQuiz , questionList.get(0).getQuiz());
         startGame.setOptionZero(optionZero , questionList.get(0).getOption_zero() , this);
         startGame.setOptionOwn(optionOwn , questionList.get(0).getOption_own() , this);
@@ -63,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void findViewByIdInit() {
         textScore = findViewById(R.id.text_score);
         textTime = findViewById(R.id.text_time);
+        textNumberQuiz = findViewById(R.id.text_number_question);
         textQuiz = findViewById(R.id.text_question);
         optionZero = findViewById(R.id.optionZero);
         optionOwn = findViewById(R.id.optionOwn);
@@ -137,19 +141,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
 
-        idQuiz += 1;
-        if ((int) view.getTag() == questionList.get(idQuiz).getAnswerTrue()){
-            ((MaterialButton)view).setStrokeColor(ContextCompat.getColorStateList(MainActivity.this , R.color.green1));
-            ((MaterialButton)view).setTextColor(ContextCompat.getColor(MainActivity.this , R.color.green1));
-            ((MaterialButton)view).setIcon(ContextCompat.getDrawable(MainActivity.this , R.drawable.ic_check));
-            ((MaterialButton)view).setIconTint(ContextCompat.getColorStateList(MainActivity.this , R.color.green1));
-        }else {
-            ((MaterialButton)view).setStrokeColor(ContextCompat.getColorStateList(MainActivity.this , R.color.red));
-            ((MaterialButton)view).setTextColor(ContextCompat.getColor(MainActivity.this , R.color.red));
-            ((MaterialButton)view).setIcon(ContextCompat.getDrawable(MainActivity.this , R.drawable.ic_close));
-            ((MaterialButton)view).setIconTint(ContextCompat.getColorStateList(MainActivity.this , R.color.red));
+        index+=1;
+
+        if (!(questionList.size()+1 <= index)){
+            idQuiz += 1;
+            if ((int) view.getTag() == questionList.get(idQuiz-1).getAnswerTrue()) {
+                ((MaterialButton) view).setStrokeColor(ContextCompat.getColorStateList(MainActivity.this, R.color.green1));
+                ((MaterialButton) view).setTextColor(ContextCompat.getColor(MainActivity.this, R.color.green1));
+                ((MaterialButton) view).setIcon(ContextCompat.getDrawable(MainActivity.this, R.drawable.ic_check));
+                ((MaterialButton) view).setIconTint(ContextCompat.getColorStateList(MainActivity.this, R.color.green1));
+            } else {
+                ((MaterialButton) view).setStrokeColor(ContextCompat.getColorStateList(MainActivity.this, R.color.red));
+                ((MaterialButton) view).setTextColor(ContextCompat.getColor(MainActivity.this, R.color.red));
+                ((MaterialButton) view).setIcon(ContextCompat.getDrawable(MainActivity.this, R.drawable.ic_close));
+                ((MaterialButton) view).setIconTint(ContextCompat.getColorStateList(MainActivity.this, R.color.red));
+            }
+            updateGame(view);
         }
-        updateGame(view);
     }
 
     public void updateGame(View view){
@@ -157,18 +165,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startGame.setTextQuiz(textQuiz , questionList.get(idQuiz).getQuiz());
-                startGame.setOptionZero(optionZero , questionList.get(idQuiz).getOption_zero() ,MainActivity.this);
-                startGame.setOptionOwn(optionOwn , questionList.get(idQuiz).getOption_own() , MainActivity.this);
-                startGame.setOptionTwo(optionTwo , questionList.get(idQuiz).getOption_two() , MainActivity.this);
-                startGame.setOptionThree(optionThree , questionList.get(idQuiz).getOption_three() , MainActivity.this);
+                try {
+                    startGame.setTextQuiz(textQuiz , questionList.get(idQuiz).getQuiz());
+                    startGame.setTextNumberQuiz(textNumberQuiz , questionList.get(idQuiz).getId());
+                    startGame.setOptionZero(optionZero , questionList.get(idQuiz).getOption_zero() ,MainActivity.this);
+                    startGame.setOptionOwn(optionOwn , questionList.get(idQuiz).getOption_own() , MainActivity.this);
+                    startGame.setOptionTwo(optionTwo , questionList.get(idQuiz).getOption_two() , MainActivity.this);
+                    startGame.setOptionThree(optionThree , questionList.get(idQuiz).getOption_three() , MainActivity.this);
 
-                ((MaterialButton)view).setStrokeColor(ContextCompat.getColorStateList(MainActivity.this , R.color.gray2));
-                ((MaterialButton)view).setTextColor(ContextCompat.getColor(MainActivity.this , R.color.white));
-                ((MaterialButton)view).setIcon(ContextCompat.getDrawable(MainActivity.this , R.drawable.ic_circle));
-                ((MaterialButton)view).setIconTint(ContextCompat.getColorStateList(MainActivity.this , R.color.gray2));
+                    ((MaterialButton)view).setStrokeColor(ContextCompat.getColorStateList(MainActivity.this , R.color.gray2));
+                    ((MaterialButton)view).setTextColor(ContextCompat.getColor(MainActivity.this , R.color.white));
+                    ((MaterialButton)view).setIcon(ContextCompat.getDrawable(MainActivity.this , R.drawable.ic_circle));
+                    ((MaterialButton)view).setIconTint(ContextCompat.getColorStateList(MainActivity.this , R.color.gray2));
+                }catch (Exception e){
+                    Toast.makeText(MainActivity.this, "finish", Toast.LENGTH_SHORT).show();
+                }
+
             }
-        } , 1000);
+        } , 500);
 
     }
 }
